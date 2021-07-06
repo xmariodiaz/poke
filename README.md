@@ -9,6 +9,13 @@ npm run dev
 # or
 yarn dev
 ```
+Run the the server:
+
+```bash
+npm run start
+# or
+yarn dev
+```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
