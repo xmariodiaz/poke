@@ -10,7 +10,7 @@
 export default class PdataClass {
   count?: any;
   next?: string;
-  previous?: any;
+  previous?: any | string | null;
   result?: {
     name: string | string[];
     url: string;
@@ -19,9 +19,9 @@ export default class PdataClass {
   constructor(
     count?: any,
     next?: any,
-    previous?: string,
+    previous?: any,
     result?: {
-      name: string;
+      name: string | string[];
       url: string;
     }[]
   ) {
@@ -39,12 +39,13 @@ export default class PdataClass {
    *      to show finally the url of the pokemon.
    */
   getRandomEntry(): any {
-    var lenMax = Object.keys(this.result).length - 1;
+    var lenMax = Object.keys(this.result || "").length - 1;
     const getRandom = () => {
       return Math.floor(Math.random() * (lenMax - 0) + 0);
     };
-
-    return this.result[getRandom()].url;
+    if (this.result) {
+      return this.result[getRandom()].url;
+    } else return null;
   }
 
   /**
@@ -55,14 +56,16 @@ export default class PdataClass {
    */
   searchName(findByname: string | string[]) {
     //just in case  this.result = PokemonList is the list with names and urls
-    var urlx: string;
-    this.result.filter(PokemonList => {
-      if (PokemonList.name === findByname) {
-        console.log(PokemonList.url);
-        urlx = PokemonList.url;
-        return;
-      }
-    });
+    var urlx = null;
+    if (this.result) {
+      this.result.filter(PokemonList => {
+        if (PokemonList.name === findByname) {
+          console.log(PokemonList.url);
+          urlx = PokemonList.url;
+          return;
+        }
+      });
+    }
     return urlx;
   }
 }
