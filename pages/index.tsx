@@ -26,26 +26,34 @@ export default function Home() {
    * This is the function pokesearch, this uses the input to look the word given in the api
    */
   async function pokeSearch() {
-    try {
-      let response = await axios.get(
-        "/api/data?name=" + myInput.current?.value
-      ); //local API+param to get the url
-      console.log("Search res:" + response.data);
-      if (response.data) {
-        let PokeOficialApi = await axios.get(response.data); //pokemon api url
-        console.log(
-          "Search Poke oficial " + PokeOficialApi.data.sprites.front_default
+    if (myInput.current?.value) {
+      try {
+        /**
+         * //local API+param to get the url
+         * **/
+        let response = await axios.get(
+          "/api/data?name=" + myInput.current?.value
         );
+        console.log("Search res:" + response.data);
+        if (response.data) {
+          /**
+           * //pokemon api url
+           */
+          let PokeOficialApi = await axios.get(response.data);
+          console.log(
+            "Search Poke oficial " + PokeOficialApi.data.sprites.front_default
+          );
 
-        if (PokeOficialApi.data) {
-          // get the url of the image and set it in the DOM using the hook
-          goSearch(PokeOficialApi.data.sprites.front_default);
-        } else {
-          return "/poke.png";
+          if (PokeOficialApi.data) {
+            // get the url of the image and set it in the DOM using the hook
+            goSearch(PokeOficialApi.data.sprites.front_default);
+          } else {
+            return "./poke.png";
+          }
         }
+      } catch (error) {
+        console.error(error);
       }
-    } catch (error) {
-      console.error(error);
     }
   }
   const myInput = React.createRef<HTMLInputElement>(); //using React.createRef I bind the input with virtual react DOM
@@ -53,7 +61,7 @@ export default function Home() {
   return (
     <div className={styles.outerbox}>
       <div>
-        <input ref={myInput} />
+        <input placeholder="charizard" ref={myInput} />
         <button
           onClick={e => {
             pokeSearch();
