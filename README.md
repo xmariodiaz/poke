@@ -1,4 +1,4 @@
-This is a [Next.js] Pokemon TypeScript React Css Api Json 
+This is a [Next.js] Pokemon Api TypeScript React Css Api Json 
 
 ## Getting Started
 
